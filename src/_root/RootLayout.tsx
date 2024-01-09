@@ -1,8 +1,5 @@
-
 const RootLayout = () => {
-  return (
-    <div>RootLayout</div>
-  )
-}
+  return <div>RootLayout</div>;
+};
 
-export default RootLayout
+export default RootLayout;
