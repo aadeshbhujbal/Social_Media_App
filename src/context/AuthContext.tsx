@@ -23,6 +23,8 @@ const INITIAL_STATE = {
 };
 
 type IContextType = {
+  id: any;
+  imageUrl: string;
   user: IUser;
   isPending: boolean;
   setUser: React.Dispatch<React.SetStateAction<IUser>>;
