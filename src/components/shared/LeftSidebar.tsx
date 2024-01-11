@@ -29,7 +29,7 @@ export const LeftSidebar = () => {
         </Link> */}
         <Link to={`/profile/${user.id}`} className="flex gap-3 items-center">
           <img
-            src={user.imageURL || "/assets/images/profile-placeholder.svg"}
+            src={user.imageUrl || "/assets/images/profile-placeholder.svg"}
             alt="Profile"
             className="h-14 max-w-14rounded-full"
           />

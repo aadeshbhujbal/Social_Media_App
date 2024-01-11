@@ -19,11 +19,11 @@ export const Topbar = () => {
     <section className="topbar">
       <div className="flex flex-between py-4 px-5  justify-between">
         <Link to="/" className="flex gap-3 items-center">
-          <img
+          {/* <img
             src="/assets/images/logo.svg"
             alt="logo"
             width={130}
-            height={325}></img>
+            height={325}></img> */}
         </Link>
         <div className="flex gap-4 ">
           <Button
