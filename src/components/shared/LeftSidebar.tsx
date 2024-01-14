@@ -4,11 +4,12 @@ import { useSignOutAccount } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 import { sidebarLinks } from "@/constants";
 import { Button } from "../ui/button";
+import { INavLink } from "@/types";
 
 export const LeftSidebar = () => {
   const { mutate: signOut, isSuccess } = useSignOutAccount();
   const navigate = useNavigate();
-  const user = useUserContext();
+  const { user } = useUserContext();
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export const LeftSidebar = () => {
           <img
             src={user.imageUrl || "/assets/images/profile-placeholder.svg"}
             alt="Profile"
-            className="h-14 max-w-14rounded-full"
+            className="h-14 max-w-14  rounded-full"
           />
           <div className="flex flex-col">
             <p className="body-bold">{user.name}</p>

@@ -23,8 +23,6 @@ const INITIAL_STATE = {
 };
 
 type IContextType = {
-  id: any;
-  imageUrl: string;
   user: IUser;
   isPending: boolean;
   setUser: React.Dispatch<React.SetStateAction<IUser>>;
@@ -32,7 +30,7 @@ type IContextType = {
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   checkAuthUser: () => Promise<boolean>;
 };
-
+ 
 const AuthContext = createContext<IContextType>(INITIAL_STATE);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -45,7 +43,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setisPending(true);
     try {
       const currentAccount = await getCurrentUser();
-      console.log(currentAccount);
       if (currentAccount) {
         setUser({
           id: currentAccount.$id,
@@ -95,3 +92,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 }
 
 export const useUserContext = () => useContext(AuthContext);
+
