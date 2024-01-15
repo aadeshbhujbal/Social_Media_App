@@ -5,7 +5,7 @@
  * Provides reusable data fetching and caching with automatic
  * refetching and cache invalidation when data changes.
  */
-import { INewPost, INewUser } from "@/types";
+import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   createUserAccount,
@@ -17,6 +17,9 @@ import {
   savePost,
   deleteSavedPost,
   getCurrentUser,
+  getPostById,
+  updatePost,
+  deletePost,
 } from "../appwrite/api";
 import { QUERY_KEYS } from "./querykey";
 
@@ -27,7 +30,6 @@ export const useCreateUserAccount = () => {
 };
 
 // Import the necessary dependencies
-
 
 // Define the useSignInAccount function
 export const useSignInAccount = () => {
@@ -133,5 +135,42 @@ export const useGetCurrentUser = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_CURRENT_USER],
     queryFn: getCurrentUser,
+  });
+};
+
+export const useGetPostById = (postId?: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_POST_BY_ID, postId],
+    queryFn: () => getPostById(postId),
+    /**
+     * Enables the query based on whether a post ID is provided.
+     * This allows optionally disabling the query when no post ID is available.
+     */
+    enabled: !!postId,
+  });
+};
+
+export const useUpdatePost = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (post: IUpdatePost) => updatePost(post),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.$id],
+      });
+    },
+  });
+};
+
+export const useDeletePost = (postId: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ postId, imageId }: { postId: string; imageId: string }) =>
+      deletePost(postId, imageId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+      });
+    },
   });
 };
